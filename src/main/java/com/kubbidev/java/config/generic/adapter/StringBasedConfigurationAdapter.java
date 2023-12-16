@@ -109,9 +109,6 @@ public abstract class StringBasedConfigurationAdapter implements ConfigurationAd
         Class<E> clazz = def.getDeclaringClass();
         String value = resolveValue(path);
 
-        if (value == null) {
-            return def;
-        }
-        return Objects.requireNonNull(EnumUtil.getEnum(value, clazz));
+        return Objects.requireNonNullElse(EnumUtil.getEnum(value, clazz), def);
     }
 }
