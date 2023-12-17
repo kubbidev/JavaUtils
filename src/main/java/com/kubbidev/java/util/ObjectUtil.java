@@ -18,8 +18,109 @@ public final class ObjectUtil {
     private static final long LONG_ZERO = 0L;
     private static final int INT_ZERO = 0;
 
+    private static final String DEFAULT_IS_TRUE_EX_MESSAGE = "The validated expression is false";
+
     private ObjectUtil() {
         throw new AssertionError("No com.kubbidev.java.util.Objects instances for you!");
+    }
+
+    /**
+     * <p>Validate that the argument condition is {@code true}; otherwise
+     * throwing an exception with the specified message. This method is useful when
+     * validating according to an arbitrary boolean expression, such as validating a
+     * primitive number or using your own custom validation expression.</p>
+     *
+     * <pre>Validate.isTrue(i &gt; 0.0, "The value must be greater than zero: &#37;d", i);</pre>
+     *
+     * <p>For performance reasons, the long value is passed as a separate parameter and
+     * appended to the exception message only in the case of an error.</p>
+     *
+     * @param expression  the boolean expression to check
+     * @param message  the {@link String#format(String, Object...)} exception message if invalid, not null
+     * @param value  the value to append to the message when invalid
+     * @throws IllegalArgumentException if expression is {@code false}
+     * @see #isTrue(boolean)
+     * @see #isTrue(boolean, String, double)
+     * @see #isTrue(boolean, String, Object...)
+     */
+    public static void isTrue(boolean expression, String message, long value) {
+        if (!expression) {
+            throw new IllegalArgumentException(String.format(message, value));
+        }
+    }
+
+    /**
+     * <p>Validate that the argument condition is {@code true}; otherwise
+     * throwing an exception with the specified message. This method is useful when
+     * validating according to an arbitrary boolean expression, such as validating a
+     * primitive number or using your own custom validation expression.</p>
+     *
+     * <pre>Validate.isTrue(d &gt; 0.0, "The value must be greater than zero: &#37;s", d);</pre>
+     *
+     * <p>For performance reasons, the double value is passed as a separate parameter and
+     * appended to the exception message only in the case of an error.</p>
+     *
+     * @param expression  the boolean expression to check
+     * @param message  the {@link String#format(String, Object...)} exception message if invalid, not null
+     * @param value  the value to append to the message when invalid
+     * @throws IllegalArgumentException if expression is {@code false}
+     * @see #isTrue(boolean)
+     * @see #isTrue(boolean, String, long)
+     * @see #isTrue(boolean, String, Object...)
+     */
+    public static void isTrue(boolean expression, String message, double value) {
+        if (!expression) {
+            throw new IllegalArgumentException(String.format(message, value));
+        }
+    }
+
+    /**
+     * <p>Validate that the argument condition is {@code true}; otherwise
+     * throwing an exception with the specified message. This method is useful when
+     * validating according to an arbitrary boolean expression, such as validating a
+     * primitive number or using your own custom validation expression.</p>
+     *
+     * <pre>
+     * Validate.isTrue(i &gt;= min &amp;&amp; i &lt;= max, "The value must be between &#37;d and &#37;d", min, max);
+     * Validate.isTrue(myObject.isOk(), "The object is not okay");</pre>
+     *
+     * @param expression  the boolean expression to check
+     * @param message  the {@link String#format(String, Object...)} exception message if invalid, not null
+     * @param values  the optional values for the formatted exception message, null array not recommended
+     * @throws IllegalArgumentException if expression is {@code false}
+     * @see #isTrue(boolean)
+     * @see #isTrue(boolean, String, long)
+     * @see #isTrue(boolean, String, double)
+     */
+    public static void isTrue(boolean expression, String message, Object... values) {
+        if (!expression) {
+            throw new IllegalArgumentException(String.format(message, values));
+        }
+    }
+
+    /**
+     * <p>Validate that the argument condition is {@code true}; otherwise
+     * throwing an exception. This method is useful when validating according
+     * to an arbitrary boolean expression, such as validating a
+     * primitive number or using your own custom validation expression.</p>
+     *
+     * <pre>
+     * Validate.isTrue(i &gt; 0);
+     * Validate.isTrue(myObject.isOk());</pre>
+     *
+     * <p>The message of the exception is &quot;The validated expression is
+     * false&quot;.</p>
+     *
+     * @param expression  the boolean expression to check
+     * @throws IllegalArgumentException if expression is {@code false}
+     * @see #isTrue(boolean, String, long)
+     * @see #isTrue(boolean, String, double)
+     * @see #isTrue(boolean, String, Object...)
+     */
+    public static void isTrue(boolean expression) {
+        if (!expression) {
+            throw new IllegalArgumentException(DEFAULT_IS_TRUE_EX_MESSAGE);
+        }
     }
 
     /**
